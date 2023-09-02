@@ -1,6 +1,6 @@
 package com.ttw.weather.di
 
-import com.ttw.weather.api.ApiService
+import com.ttw.weather.network.api.ApiService
 import com.ttw.weather.utils.Constants
 import dagger.Module
 import dagger.Provides
