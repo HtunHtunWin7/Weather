@@ -8,4 +8,8 @@ class WeatherRepository @Inject constructor(private val service: ApiService)  {
 
     suspend fun getAstronomy(name: String, date: String) = service.getAstronomy(name,date)
 
+    suspend fun search(name: String) = service.search(name)
+
+    suspend fun forecast(name: String,) = service.forecast(name,5,"yes", "yes")
+
 }

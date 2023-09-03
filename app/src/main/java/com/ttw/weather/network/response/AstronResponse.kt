@@ -5,5 +5,9 @@ import com.ttw.weather.model.Location
 
 data class AstronResponse(
     val location: Location,
-    val astronomy: List<Astronomy>
+    val astronomy: Astro
+)
+
+data class Astro(
+    val astro: Astronomy
 )

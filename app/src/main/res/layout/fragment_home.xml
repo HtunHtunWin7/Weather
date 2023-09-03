@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,101 +10,464 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.HomeFragment"
-        android:background="@color/background_one">
+        tools:context=".ui.HomeFragment">
 
         <RelativeLayout
             android:id="@+id/toolBar"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="64dp"
+            android:layout_gravity="top"
             android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UselessParent">
 
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                tools:text="Yangon"/>
-
-            <ImageButton
-                android:id="@+id/btnSearch"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/baseline_add_24"
-                android:layout_alignParentEnd="true"/>
+                app:endIconMode="clear_text"
+                tools:ignore="HardcodedText,RtlHardcoded">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edit_txt"
+                    android:drawableLeft="@drawable/baseline_search_24"
+                    android:inputType="textAutoComplete" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </RelativeLayout>
 
-        <ScrollView
-            app:layout_constraintTop_toBottomOf="@+id/toolBar"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/custom_progressbar"
+            android:outlineSpotShadowColor="@color/main_color"
+            android:shadowColor="@color/main_color"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scrollbars="none">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            android:scrollbars="none"
+            app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBar">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txtCurrentDate"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text = "September 10 2023"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:layout_margin="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:cardBackgroundColor="@color/main_color"
+                    app:cardCornerRadius="45dp"
+                    app:cardElevation="12dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp">
+
+                        <TextView
+                            android:id="@+id/txtTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="16dp"
+                            android:textColor="@color/white"
+                            android:textSize="32sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Yangon" />
+
+
+                        <TextView
+                            android:id="@+id/txtTempC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="16dp"
+                            android:textColor="@color/white"
+                            android:textSize="96sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                            tools:text="28" />
+
+                        <TextView
+                            android:id="@+id/txtTempUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/white"
+                            android:textSize="32sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@+id/txtTempC"
+                            app:layout_constraintTop_toTopOf="@+id/txtTempC"
+                            tools:text="°C" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toEndOf="@+id/txtTempUnit"
+                            app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+
+                            <TextView
+                                android:id="@+id/txtTitleWind"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                tools:text="Wind" />
+
+                            <TextView
+                                android:id="@+id/txtWind"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="365 mph" />
+
+                            <TextView
+                                android:id="@+id/txtTitleHumidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                tools:text="Humidity" />
+
+                            <TextView
+                                android:id="@+id/txtHumidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="25 %" />
+
+                            <TextView
+                                android:id="@+id/txtTitleCloud"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                tools:text="Humidity" />
+
+                            <TextView
+                                android:id="@+id/txtCloud"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="50 %" />
+
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/txtTempC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="72dp"
-                    android:textColor="@color/white"
-                    android:textSize="68sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/txtCurrentDate"
-                    tools:text="28" />
-
-                <TextView
-                    android:id="@+id/txtTempUnit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="°C"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/txtTempC"
-                    app:layout_constraintStart_toEndOf="@+id/txtTempC"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Astronomy"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="140dp"
+                            android:padding="8dp"
+                            app:cardBackgroundColor="@color/background_astro"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageButton
+                                    android:id="@+id/imgSun_shine"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/sun_rise"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sunrise"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@id/imgSun_shine"
+                                    app:layout_constraintEnd_toEndOf="@id/imgSun_shine"
+                                    app:layout_constraintStart_toStartOf="@id/imgSun_shine"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtSunrise_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="05 : 52 AM"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="@id/imgSun_shine"
+                                    app:layout_constraintStart_toStartOf="@id/imgSun_shine"
+                                    app:layout_constraintTop_toBottomOf="@id/imgSun_shine" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="140dp"
+                            android:layout_marginStart="8dp"
+                            app:cardBackgroundColor="@color/background_astro"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageButton
+                                    android:id="@+id/imgSun_set"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/sun_set"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sunset"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@id/imgSun_set"
+                                    app:layout_constraintEnd_toEndOf="@id/imgSun_set"
+                                    app:layout_constraintStart_toStartOf="@id/imgSun_set"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtSunset_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="06 : 18 PM"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="@id/imgSun_set"
+                                    app:layout_constraintStart_toStartOf="@id/imgSun_set"
+                                    app:layout_constraintTop_toBottomOf="@id/imgSun_set" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="140dp"
+                            android:layout_marginStart="8dp"
+                            app:cardBackgroundColor="@color/background_astro"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageButton
+                                    android:id="@+id/imgMoon_rise"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/moon_rise"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Moonrise"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@id/imgMoon_rise"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_rise"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_rise"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtMoonrise_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="08:10 PM"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_rise"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_rise"
+                                    app:layout_constraintTop_toBottomOf="@id/imgMoon_rise" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="140dp"
+                            android:layout_marginLeft="8dp"
+                            app:cardBackgroundColor="@color/background_astro"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageButton
+                                    android:id="@+id/imgMoon_set"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/moon_set"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Moonset"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@id/imgMoon_set"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_set"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_set"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtMoonset_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="07:52 AM"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_set"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_set"
+                                    app:layout_constraintTop_toBottomOf="@id/imgMoon_set" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="140dp"
+                            android:layout_marginLeft="8dp"
+                            app:cardBackgroundColor="@color/background_astro"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageButton
+                                    android:id="@+id/imgMoon_illumination"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/moon_ill"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Illumination"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@id/imgMoon_illumination"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_illumination"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_illumination"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtIllumination_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="94 %"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="@id/imgMoon_illumination"
+                                    app:layout_constraintStart_toStartOf="@id/imgMoon_illumination"
+                                    app:layout_constraintTop_toBottomOf="@id/imgMoon_illumination" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <TextView
-                    android:id="@+id/txtCondition"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="Cloudy 31°/25°"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/txtTempC"
-                    app:layout_constraintEnd_toEndOf="@+id/txtTempC"
-                    app:layout_constraintTop_toBottomOf="@+id/txtTempC"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="5 days forecast"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    tools:listitem="@layout/forecast_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
         </ScrollView>
 
